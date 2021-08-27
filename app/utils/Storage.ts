@@ -43,3 +43,13 @@ export const addAddress = async (data: WalletAddress) => {
     throw new Error("unable to add address");
   }
 };
+
+export const removeAddress = async (data: WalletAddress) => {
+  try {
+    let arr: Array<WalletAddress> = await retrieveData();
+    arr = arr.filter((w) => w.label !== data.label);
+    storeData(arr);
+  } catch (error) {
+    throw new Error("unable to remove address");
+  }
+};

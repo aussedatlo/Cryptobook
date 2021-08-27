@@ -1,36 +1,18 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { View, StyleSheet } from "react-native";
-import {
-  Theme,
-  useFocusEffect,
-  useNavigation,
-  useTheme,
-} from "@react-navigation/native";
+import { Theme, useNavigation, useTheme } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
 
 import AddressList from "../component/AddressList";
-import { WalletAddress } from "../types/WalletAddress";
-import { retrieveData } from "../utils/Storage";
 
 const MainScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { navigate } = useNavigation();
-  const [arrayAddress, setArrayAddress] = useState<Array<WalletAddress>>([]);
-
-  const initArrayAddress = async () => {
-    setArrayAddress(await retrieveData());
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      initArrayAddress();
-    }, [])
-  );
 
   return (
     <View style={styles.root}>
-      <AddressList data={arrayAddress} />
+      <AddressList />
       <FAB style={styles.fab} icon="plus" onPress={() => navigate("select")} />
     </View>
   );
