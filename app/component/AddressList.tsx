@@ -5,7 +5,7 @@ import {
   useNavigation,
   useTheme,
 } from "@react-navigation/native";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, ToastAndroid } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { Divider, List, Menu } from "react-native-paper";
 import { useTranslation } from "react-i18next";
@@ -40,6 +40,7 @@ const AddressList = () => {
     const handleDelete = async () => {
       await removeAddress(item);
       await initArrayAddress();
+      ToastAndroid.show(t("removed"), ToastAndroid.SHORT);
       closeMenu();
     };
 

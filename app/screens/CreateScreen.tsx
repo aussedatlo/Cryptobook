@@ -1,5 +1,12 @@
 import React, { useMemo, useState } from "react";
-import { View, StyleSheet, Vibration, Image, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Vibration,
+  Image,
+  Text,
+  ToastAndroid,
+} from "react-native";
 import {
   RouteProp,
   Theme,
@@ -45,6 +52,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
 
     try {
       await addAddress(w);
+      ToastAndroid.show(t("created"), ToastAndroid.SHORT);
       navigate("main");
     } catch (error) {
       alert(error);

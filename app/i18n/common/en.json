@@ -1,10 +1,14 @@
 {
   "cryptobook": "Cryptobook",
   "addresses": "Adresses",
+  "select": "Select currency",
+  "address": "Address",
   "delete": "Delete",
   "setAmount": "Set the amount",
   "amount": "Amount",
   "notes": "Notes",
   "emptyNote": "Empty note",
-  "copied": "Copied to clipboard!"
+  "copied": "Copied to clipboard!",
+  "created": "Created",
+  "removed": "Removed"
 }
