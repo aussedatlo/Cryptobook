@@ -10,5 +10,8 @@
   "emptyNote": "Empty note",
   "copied": "Copied to clipboard!",
   "created": "Created",
-  "removed": "Removed"
+  "removed": "Removed",
+  "label": "Label",
+  "walletAddress": "Wallet Address",
+  "create": "Create"
 }
