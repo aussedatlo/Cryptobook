@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Theme, useNavigation, useTheme } from "@react-navigation/native";
 import { FlatList, StyleSheet, View, Image } from "react-native";
+import { Searchbar, Divider, List } from "react-native-paper";
+import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
-import { ListItem, SearchBar } from "react-native-elements";
 
 const SelectCoinScreen = () => {
   const theme = useTheme();
@@ -10,7 +11,6 @@ const SelectCoinScreen = () => {
   const { navigate } = useNavigation();
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = React.useState("");
-  const onChangeSearch = (query: string) => setSearchQuery(query);
 
   useEffect(() => {
     axios
@@ -28,25 +28,32 @@ const SelectCoinScreen = () => {
 
   const renderItem = ({ item }: any) => {
     return (
-      <ListItem
-        bottomDivider
-        onPress={() => {
-          navigate("create", { coin: item });
-        }}
-      >
-        <Image source={{ uri: item.image }} style={styles.logo} />
-        <ListItem.Content>
-          <ListItem.Title>{item.name}</ListItem.Title>
-          <ListItem.Subtitle>{item.symbol}</ListItem.Subtitle>
-        </ListItem.Content>
-        <ListItem.Chevron />
-      </ListItem>
+      <>
+        <List.Item
+          title={item.name}
+          description={item.symbol.toUpperCase()}
+          onPress={() => {
+            navigate("create", { coin: item });
+          }}
+          left={(props) => (
+            <Image source={{ uri: item.image }} style={styles.logo} />
+          )}
+          right={(props) => (
+            <Ionicons
+              style={styles.chevron}
+              name={"chevron-forward"}
+              size={16}
+            />
+          )}
+        />
+        <Divider />
+      </>
     );
   };
 
   return (
     <View style={styles.root}>
-      <SearchBar
+      <Searchbar
         placeholder="Search"
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
@@ -70,9 +77,12 @@ const createStyles = (theme: Theme) => {
     root: {
       flex: 1,
     },
+    chevron: { textAlignVertical: "center" },
     logo: {
-      width: 25,
-      height: 25,
+      width: 30,
+      height: 30,
+      alignSelf: "center",
+      margin: 5,
     },
   });
 };

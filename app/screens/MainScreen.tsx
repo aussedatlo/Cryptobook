@@ -6,7 +6,7 @@ import {
   useNavigation,
   useTheme,
 } from "@react-navigation/native";
-import { FAB, Icon } from "react-native-elements";
+import { FAB } from "react-native-paper";
 
 import AddressList from "../component/AddressList";
 import { WalletAddress } from "../types/WalletAddress";
@@ -31,16 +31,7 @@ const MainScreen = () => {
   return (
     <View style={styles.root}>
       <AddressList data={arrayAddress} />
-      <FAB
-        icon={<Icon name="add" size={25} color={theme.colors.background} />}
-        placement="right"
-        onPress={() => {
-          navigate("select");
-        }}
-        color={theme.colors.primary}
-        buttonStyle={styles.button}
-        size="large"
-      />
+      <FAB style={styles.fab} icon="plus" onPress={() => navigate("select")} />
     </View>
   );
 };
@@ -52,6 +43,12 @@ const createStyles = (theme: Theme) => {
     },
     button: {
       borderRadius: 50,
+    },
+    fab: {
+      position: "absolute",
+      margin: 16,
+      right: 0,
+      bottom: 0,
     },
   });
 };

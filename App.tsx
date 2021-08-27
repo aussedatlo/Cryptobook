@@ -8,6 +8,7 @@ import {
   DarkTheme as DefaultDarkTheme,
   NavigationContainer,
 } from "@react-navigation/native";
+import { Provider } from "react-native-paper";
 
 import "./app/i18n/i18n";
 import RootNavigator from "./app/navigation/RootNavigator";
@@ -29,9 +30,11 @@ const DarkTheme = {
 export default function App() {
   return (
     <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <NavigationContainer theme={false ? DarkTheme : LightTheme}>
-        <RootNavigator />
-      </NavigationContainer>
+      <Provider>
+        <NavigationContainer theme={false ? DarkTheme : LightTheme}>
+          <RootNavigator />
+        </NavigationContainer>
+      </Provider>
     </SafeAreaProvider>
   );
 }

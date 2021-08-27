@@ -1,8 +1,5 @@
 import React, { useMemo, useState } from "react";
 import { View, StyleSheet, Vibration, Image, Text } from "react-native";
-import { Button, Input } from "react-native-elements";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Ionicon from "react-native-vector-icons/Ionicons";
 import {
   RouteProp,
   Theme,
@@ -11,11 +8,11 @@ import {
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
+import { Button, TextInput } from "react-native-paper";
 
 import { addAddress } from "../utils/Storage";
 import { WalletAddress } from "../types/WalletAddress";
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { ListItem } from "react-native-elements/dist/list/ListItem";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -56,7 +53,6 @@ const CreateScreen = ({ route, navigation }: Props) => {
 
   return (
     <View style={styles.root}>
-      <ListItem />
       <View style={styles.title}>
         <Image source={{ uri: route.params.coin.image }} style={styles.logo} />
         <Text style={styles.coinName}>{route.params.coin.name}</Text>
@@ -64,42 +60,31 @@ const CreateScreen = ({ route, navigation }: Props) => {
           {route.params.coin.symbol.toUpperCase()}
         </Text>
       </View>
-      <Input
+      <TextInput
         placeholder={t("label")}
-        // placeholder="Edit Label"
-        leftIcon={
-          <Icon name="tag-text-outline" size={20} style={styles.iconLeft} />
-        }
+        left={<TextInput.Icon name="label-outline" size={20} />}
         value={label}
         onChangeText={setLabel}
       />
 
-      <Input
+      <TextInput
         placeholder={t("walletAddress")}
-        // placeholder="Edit Address"
-        leftIcon={
-          <Ionicon name="qr-code-sharp" size={20} style={styles.iconLeft} />
-        }
-        rightIcon={<Ionicon name="camera-outline" size={20} />}
+        left={<TextInput.Icon name="qrcode" size={20} />}
+        right={<TextInput.Icon name="barcode-scan" size={20} />}
         value={address}
         onChangeText={setAddress}
       />
 
-      <Input
+      <TextInput
         placeholder={t("notes")}
-        // placeholder="Edit Notes"
-        leftIcon={
-          <Icon name="note-text-outline" size={20} style={styles.iconLeft} />
-        }
+        left={<TextInput.Icon name="note-outline" size={20} />}
         value={notes}
         onChangeText={setNotes}
       />
 
-      <Button
-        title="Create"
-        buttonStyle={styles.button}
-        onPress={handlePress}
-      />
+      <Button style={styles.button} onPress={handlePress} mode="contained">
+        {t("create")}
+      </Button>
     </View>
   );
 };
@@ -113,13 +98,7 @@ const createStyles = (theme: Theme) => {
       paddingRight: 20,
     },
     button: {
-      width: "80%",
       marginTop: 30,
-      alignSelf: "center",
-      marginBottom: 15,
-    },
-    iconLeft: {
-      marginRight: 10,
     },
     logo: {
       width: 50,
@@ -128,7 +107,7 @@ const createStyles = (theme: Theme) => {
     title: {
       alignSelf: "center",
       alignItems: "center",
-      marginBottom: 10,
+      margin: 10,
     },
     coinName: {
       fontSize: 30,
