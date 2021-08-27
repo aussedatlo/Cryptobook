@@ -6,10 +6,11 @@ import MainScreen from "../screens/MainScreen";
 import AddressScreen from "../screens/AddressScreen";
 import CreateScreen from "../screens/CreateScreen";
 import SelectCoinScreen from "../screens/SelectCoinScreen";
+import { WalletAddress } from "../types/WalletAddress";
 
 export type RootStackParamList = {
   main: undefined;
-  address: { id: number };
+  address: { address: WalletAddress };
   create: { coin: any };
   select: undefined;
 };

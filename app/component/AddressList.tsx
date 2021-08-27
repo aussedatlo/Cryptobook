@@ -54,7 +54,7 @@ const AddressList = () => {
             title={item.label}
             description={item.address}
             onPress={() => {
-              navigate("address", { id: item.label });
+              navigate("address", { address: item });
             }}
             onLongPress={openMenu}
             left={(props) => (

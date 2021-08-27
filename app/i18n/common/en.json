@@ -1,1 +1,10 @@
-{ "cryptobook": "Cryptobook" }
+{
+  "cryptobook": "Cryptobook",
+  "addresses": "Adresses",
+  "delete": "Delete",
+  "setAmount": "Set the amount",
+  "amount": "Amount",
+  "notes": "Notes",
+  "emptyNote": "Empty note",
+  "copied": "Copied to clipboard!"
+}
