@@ -86,7 +86,7 @@ const AddressList = () => {
         <List.Subheader>{t("addresses")}</List.Subheader>
         <Divider />
         {arrayAddress.map((item: any) => (
-          <RenderMenuItem item={item} />
+          <RenderMenuItem item={item} key={item.label} />
         ))}
       </List.Section>
     </ScrollView>
