@@ -61,6 +61,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
         </Text>
       </View>
       <TextInput
+        style={styles.textInput}
         placeholder={t("label")}
         left={<TextInput.Icon name="label-outline" size={20} />}
         value={label}
@@ -68,6 +69,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
       />
 
       <TextInput
+        style={styles.textInput}
         placeholder={t("walletAddress")}
         left={<TextInput.Icon name="qrcode" size={20} />}
         right={<TextInput.Icon name="barcode-scan" size={20} />}
@@ -76,6 +78,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
       />
 
       <TextInput
+        style={styles.textInput}
         placeholder={t("notes")}
         left={<TextInput.Icon name="note-outline" size={20} />}
         value={notes}
@@ -114,6 +117,9 @@ const createStyles = (theme: Theme) => {
     },
     coinSymbol: {
       fontSize: 20,
+    },
+    textInput: {
+      marginBottom: 5,
     },
   });
 };
