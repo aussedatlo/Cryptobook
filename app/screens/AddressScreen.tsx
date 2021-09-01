@@ -1,23 +1,31 @@
-import React, { useMemo } from "react";
-import { Image, StyleSheet, ScrollView, ToastAndroid } from "react-native";
+import React, { useLayoutEffect, useMemo } from "react";
+import {
+  Image,
+  StyleSheet,
+  ScrollView,
+  ToastAndroid,
+  Alert,
+} from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Clipboard } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { useTranslation } from "react-i18next";
+import { Ionicons } from "@expo/vector-icons";
+import { Theme } from "react-native-paper/lib/typescript/types";
 import {
   Card,
   Button,
   Paragraph,
   Divider,
-  IconButton,
   TextInput,
   Surface,
   useTheme,
+  Menu,
 } from "react-native-paper";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
-import { Theme } from "react-native-paper/lib/typescript/types";
+import { useStore } from "../models/root-store/root-store-context";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -34,6 +42,72 @@ const AddressScreen = ({ route, navigation }: Props) => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [value, setValue] = React.useState<string>("");
   const { t } = useTranslation("common");
+  const { addresses } = useStore();
+
+  const handleDelete = () => {
+    Alert.alert(
+      t("alertDeleteTitle"),
+      t("alertDeleteMessage"),
+      [
+        {
+          text: t("cancel"),
+          onPress: () => {},
+          style: "cancel",
+        },
+        {
+          text: t("delete"),
+          onPress: () => {
+            addresses.removeAddress(route.params.address);
+            ToastAndroid.show(t("removed"), ToastAndroid.SHORT);
+            navigation.goBack();
+          },
+          style: "cancel",
+        },
+      ],
+      {
+        cancelable: true,
+      }
+    );
+  };
+
+  const HeaderRightComponent = () => {
+    const [visible, setVisible] = React.useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
+
+    return (
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <Ionicons
+            name="menu"
+            size={25}
+            style={styles.headerRightIcon}
+            onPress={openMenu}
+          />
+        }
+      >
+        <Menu.Item onPress={() => {}} title={t("edit")} />
+        <Divider />
+        <Menu.Item
+          onPress={() => {
+            closeMenu();
+            handleDelete();
+          }}
+          title={t("delete")}
+        />
+        <Divider />
+        <Menu.Item onPress={closeMenu} title={t("close")} />
+      </Menu>
+    );
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <HeaderRightComponent />,
+    });
+  }, [navigation, route]);
 
   return (
     <ScrollView style={styles.root}>
@@ -46,9 +120,6 @@ const AddressScreen = ({ route, navigation }: Props) => {
               source={{ uri: route.params.address.image }}
               style={styles.logo}
             />
-          )}
-          right={(props) => (
-            <IconButton {...props} icon="menu" onPress={() => {}} />
           )}
         />
         <Divider />
@@ -116,6 +187,15 @@ const AddressScreen = ({ route, navigation }: Props) => {
 
 const createStyles = (theme: Theme) => {
   return StyleSheet.create({
+    headerRight: {
+      display: "flex",
+      flexDirection: "row",
+      marginRight: 10,
+    },
+    headerRightIcon: {
+      margin: 10,
+      color: theme.colors.background,
+    },
     root: {
       flex: 1,
     },
