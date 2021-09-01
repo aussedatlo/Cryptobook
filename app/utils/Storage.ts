@@ -1,55 +1,50 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { WalletAddress } from "../types/WalletAddress";
-
-const STORAGE_KEY = "cryptobook-storage";
-
-export const storeData = async (data: Array<WalletAddress>) => {
+/**
+ * Loads something from storage and runs it thru JSON.parse.
+ *
+ * @param key The key to fetch.
+ */
+export async function load(key: string): Promise<any | null> {
   try {
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch (error) {
-    console.log("unable to store address");
+    const almostThere = await AsyncStorage.getItem(key);
+    return JSON.parse(almostThere || "{}");
+  } catch {
+    return null;
   }
-};
+}
 
-export const retrieveData = async () => {
+/**
+ * Saves an object to storage.
+ *
+ * @param key The key to fetch.
+ * @param value The value to store.
+ */
+export async function save(key: string, value: any): Promise<boolean> {
   try {
-    const value = await AsyncStorage.getItem(STORAGE_KEY);
-
-    if (value !== null) {
-      // We have data!!
-      return JSON.parse(value);
-    } else {
-      // No data, return empty array
-      return [];
-    }
-  } catch (error) {
-    console.log("unable to get data");
-    return [];
+    await AsyncStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch {
+    return false;
   }
-};
+}
 
-export const addAddress = async (data: WalletAddress) => {
+/**
+ * Removes something from storage.
+ *
+ * @param key The key to kill.
+ */
+export async function remove(key: string): Promise<void> {
   try {
-    let arr: Array<WalletAddress> = await retrieveData();
+    await AsyncStorage.removeItem(key);
+  } catch {}
+}
 
-    if (arr.find((w) => w.label === data.label)) {
-      throw new Error("label exist");
-    }
-
-    arr.push(data);
-    storeData(arr);
-  } catch (error) {
-    throw new Error("unable to add address");
-  }
-};
-
-export const removeAddress = async (data: WalletAddress) => {
+/**
+ * Burn it all to the ground.
+ */
+export async function clear(): Promise<void> {
   try {
-    let arr: Array<WalletAddress> = await retrieveData();
-    arr = arr.filter((w) => w.label !== data.label);
-    storeData(arr);
-  } catch (error) {
-    throw new Error("unable to remove address");
-  }
-};
+    await AsyncStorage.clear();
+  } catch {}
+}

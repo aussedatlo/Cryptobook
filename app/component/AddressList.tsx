@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from "react";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import React, { useMemo } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   Image,
   StyleSheet,
@@ -11,27 +11,16 @@ import { Card, Menu, useTheme } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
 import { Theme } from "react-native-paper/lib/typescript/types";
+import { observer } from "mobx-react-lite";
 
-import { getAddress, removeAddress } from "../utils/Storage";
-import { WalletAddress } from "../types/WalletAddress";
+import { useStore } from "../models/root-store/root-store-context";
 
 const AddressList = () => {
   const { navigate } = useNavigation();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { t } = useTranslation("common");
-  const [arrayAddress, setArrayAddress] = useState<Array<WalletAddress>>([]);
-
-  const initArrayAddress = async () => {
-    console.log("initArrayAddress");
-    setArrayAddress(await getAddress());
-  };
-
-  useFocusEffect(
-    React.useCallback(() => {
-      initArrayAddress();
-    }, [])
-  );
+  const { addresses } = useStore();
 
   const RenderMenuItem = ({ item }: any) => {
     const [visible, setVisible] = React.useState(false);
@@ -39,8 +28,7 @@ const AddressList = () => {
     const closeMenu = () => setVisible(false);
 
     const handleDelete = async () => {
-      await removeAddress(item);
-      await initArrayAddress();
+      addresses.removeAddress(item);
       ToastAndroid.show(t("removed"), ToastAndroid.SHORT);
       closeMenu();
     };
@@ -89,7 +77,7 @@ const AddressList = () => {
 
   return (
     <ScrollView>
-      {arrayAddress.map((item: any) => (
+      {addresses.addresses.map((item: any) => (
         <RenderMenuItem item={item} key={item.label} />
       ))}
     </ScrollView>
@@ -119,4 +107,4 @@ const createStyles = (theme: Theme) => {
   });
 };
 
-export default AddressList;
+export default observer(AddressList);

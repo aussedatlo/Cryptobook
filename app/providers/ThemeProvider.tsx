@@ -10,6 +10,8 @@ import {
   NavigationContainer,
 } from "@react-navigation/native";
 
+import { useStore } from "../models/root-store/root-store-context";
+
 declare global {
   namespace ReactNativePaper {
     export interface ThemeColors {}
@@ -49,14 +51,19 @@ const CombinedDarkTheme = {
 };
 
 interface ThemeProviderProps {
-  dark: boolean;
   children: ReactNode;
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+  const { settings } = useStore();
+
   return (
-    <PaperProvider theme={CombinedDarkTheme}>
-      <NavigationContainer theme={CombinedDarkTheme}>
+    <PaperProvider
+      theme={settings.dark ? CombinedDarkTheme : CombinedLightTheme}
+    >
+      <NavigationContainer
+        theme={settings.dark ? CombinedDarkTheme : CombinedLightTheme}
+      >
         {children}
       </NavigationContainer>
     </PaperProvider>
