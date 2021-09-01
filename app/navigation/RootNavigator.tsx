@@ -11,6 +11,7 @@ import CreateScreen from "../screens/CreateScreen";
 import SelectCoinScreen from "../screens/SelectCoinScreen";
 import OptionsScreen from "../screens/OptionsScreen";
 import { IWalletAddress } from "../models/addresses/addresses-model";
+import BarCodeScannerScreen from "../screens/BarCodeScannerScreen";
 
 export type RootStackParamList = {
   main: undefined;
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   create: { coin: any };
   select: undefined;
   options: undefined;
+  scanner: { onGoBack: (data: string) => void };
 };
 
 const RootNavigator = () => {
@@ -59,6 +61,7 @@ const RootNavigator = () => {
       <RootStack.Screen name="create" component={CreateScreen} />
       <RootStack.Screen name="select" component={SelectCoinScreen} />
       <RootStack.Screen name="options" component={OptionsScreen} />
+      <RootStack.Screen name="scanner" component={BarCodeScannerScreen} />
     </RootStack.Navigator>
   );
 };

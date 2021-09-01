@@ -76,7 +76,17 @@ const CreateScreen = ({ route, navigation }: Props) => {
             style={styles.textInput}
             placeholder={t("walletAddress")}
             left={<TextInput.Icon name="qrcode" size={20} />}
-            right={<TextInput.Icon name="barcode-scan" size={20} />}
+            right={
+              <TextInput.Icon
+                name="barcode-scan"
+                size={20}
+                onPress={() => {
+                  navigation.navigate("scanner", {
+                    onGoBack: (address: string) => setAddress(address),
+                  });
+                }}
+              />
+            }
             value={address}
             onChangeText={setAddress}
           />
