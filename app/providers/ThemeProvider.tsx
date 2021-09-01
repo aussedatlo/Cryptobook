@@ -9,6 +9,7 @@ import {
   DarkTheme as NavigationDarkTheme,
   NavigationContainer,
 } from "@react-navigation/native";
+import { observer } from "mobx-react-lite";
 
 import { useStore } from "../models/root-store/root-store-context";
 
@@ -70,4 +71,4 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   );
 };
 
-export default ThemeProvider;
+export default observer(ThemeProvider);

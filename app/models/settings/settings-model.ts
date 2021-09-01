@@ -5,8 +5,8 @@ export const SettingsModel = types
     dark: types.optional(types.boolean, false),
   })
   .actions((self) => ({
-    toggleDarkMode: (value: boolean) => {
-      self.dark = !self.dark;
+    setDark: (value: boolean) => {
+      self.dark = value;
     },
   }));
 
