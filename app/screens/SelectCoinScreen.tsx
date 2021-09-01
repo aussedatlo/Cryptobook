@@ -79,7 +79,11 @@ const createStyles = (theme: Theme) => {
     root: {
       flex: 1,
     },
-    chevron: { textAlignVertical: "center" },
+    chevron: {
+      textAlignVertical: "center",
+      marginRight: 10,
+      color: theme.dark ? theme.colors.primary : theme.colors.accent,
+    },
     logo: {
       width: 30,
       height: 30,

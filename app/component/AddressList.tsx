@@ -95,7 +95,7 @@ const createStyles = (theme: Theme) => {
     chevron: {
       textAlignVertical: "center",
       marginRight: 10,
-      color: theme.colors.primary,
+      color: theme.dark ? theme.colors.primary : theme.colors.accent,
     },
     menu: { left: "auto", right: 10, marginTop: 60 },
     logo: {
