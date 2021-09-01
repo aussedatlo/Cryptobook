@@ -1,17 +1,18 @@
 import React, { useMemo, useState } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import {
-  Theme,
-  useFocusEffect,
-  useNavigation,
-  useTheme,
-} from "@react-navigation/native";
-import { Image, StyleSheet, ToastAndroid } from "react-native";
+  Image,
+  StyleSheet,
+  ToastAndroid,
+  TouchableNativeFeedback,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { Divider, List, Menu } from "react-native-paper";
+import { Card, Menu, useTheme } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { Ionicons } from "@expo/vector-icons";
+import { Theme } from "react-native-paper/lib/typescript/types";
 
-import { removeAddress, retrieveData } from "../utils/Storage";
+import { getAddress, removeAddress } from "../utils/Storage";
 import { WalletAddress } from "../types/WalletAddress";
 
 const AddressList = () => {
@@ -23,7 +24,7 @@ const AddressList = () => {
 
   const initArrayAddress = async () => {
     console.log("initArrayAddress");
-    setArrayAddress(await retrieveData());
+    setArrayAddress(await getAddress());
   };
 
   useFocusEffect(
@@ -51,29 +52,34 @@ const AddressList = () => {
         onDismiss={closeMenu}
         style={styles.menu}
         anchor={
-          <List.Item
-            title={item.label}
-            description={item.address}
+          <TouchableNativeFeedback
             onPress={() => {
               navigate("address", { address: item });
             }}
             onLongPress={openMenu}
-            left={(props) => (
-              <Image
-                source={{ uri: item.image }}
-                width={30}
-                height={30}
-                style={styles.logo}
+          >
+            <Card style={styles.card}>
+              <Card.Title
+                title={item.label}
+                subtitle={item.address}
+                left={(props) => (
+                  <Image
+                    source={{ uri: item.image }}
+                    width={30}
+                    height={30}
+                    style={styles.logo}
+                  />
+                )}
+                right={(props) => (
+                  <Ionicons
+                    style={styles.chevron}
+                    name={"chevron-forward"}
+                    size={16}
+                  />
+                )}
               />
-            )}
-            right={(props) => (
-              <Ionicons
-                style={styles.chevron}
-                name={"chevron-forward"}
-                size={16}
-              />
-            )}
-          />
+            </Card>
+          </TouchableNativeFeedback>
         }
       >
         <Menu.Item onPress={handleDelete} title={t("delete")} />
@@ -83,13 +89,9 @@ const AddressList = () => {
 
   return (
     <ScrollView>
-      <List.Section>
-        <List.Subheader>{t("addresses")}</List.Subheader>
-        <Divider />
-        {arrayAddress.map((item: any) => (
-          <RenderMenuItem item={item} key={item.label} />
-        ))}
-      </List.Section>
+      {arrayAddress.map((item: any) => (
+        <RenderMenuItem item={item} key={item.label} />
+      ))}
     </ScrollView>
   );
 };
@@ -98,17 +100,22 @@ const createStyles = (theme: Theme) => {
   return StyleSheet.create({
     root: {
       flex: 1,
-      backgroundColor: theme.colors.card,
+      backgroundColor: theme.colors.background,
       paddingLeft: 20,
       paddingRight: 20,
     },
-    chevron: { textAlignVertical: "center" },
+    chevron: {
+      textAlignVertical: "center",
+      marginRight: 10,
+      color: theme.colors.primary,
+    },
     menu: { left: "auto", right: 10, marginTop: 60 },
     logo: {
       width: 30,
       height: 30,
       alignSelf: "center",
     },
+    card: { margin: 5 },
   });
 };
 

@@ -22,11 +22,13 @@ const CombinedLightTheme = {
   colors: {
     ...NavigationDefaultTheme.colors,
     ...PaperDefaultTheme.colors,
-    primary: "#1d2025",
-    background: "#eeeeee",
-    accent: "#f0b80b",
+    primary: "#f29e02",
+    background: "#f0f0f0",
+    accent: "#0463B5",
     error: "#ff4040",
-    text: "#202020",
+    text: "#343434",
+    placeholder: "#505050",
+    surface: "#f5f5f5",
   },
 };
 
@@ -36,22 +38,25 @@ const CombinedDarkTheme = {
   colors: {
     ...NavigationDarkTheme.colors,
     ...PaperDarkTheme.colors,
-    primary: "#1d2025",
-    background: "#eeeeee",
-    accent: "#f0b80b",
+    primary: "#f29e02",
+    background: "#252525",
+    accent: "#0463B5",
     error: "#ff4040",
-    text: "#202020",
+    text: "#eeeeee",
+    placeholder: "#cccccc",
+    surface: "#343434",
   },
 };
 
 interface ThemeProviderProps {
+  dark: boolean;
   children: ReactNode;
 }
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   return (
-    <PaperProvider theme={CombinedLightTheme}>
-      <NavigationContainer theme={CombinedLightTheme}>
+    <PaperProvider theme={CombinedDarkTheme}>
+      <NavigationContainer theme={CombinedDarkTheme}>
         {children}
       </NavigationContainer>
     </PaperProvider>

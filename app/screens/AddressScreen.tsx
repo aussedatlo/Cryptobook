@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Image, StyleSheet, ScrollView, ToastAndroid } from "react-native";
-import { RouteProp, Theme, useTheme } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Clipboard } from "react-native";
 import QRCode from "react-native-qrcode-svg";
@@ -13,9 +13,11 @@ import {
   IconButton,
   TextInput,
   Surface,
+  useTheme,
 } from "react-native-paper";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { Theme } from "react-native-paper/lib/typescript/types";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -37,7 +39,6 @@ const AddressScreen = ({ route, navigation }: Props) => {
     <ScrollView style={styles.root}>
       <Card style={styles.card}>
         <Card.Title
-          style={styles.cardTitle}
           title={route.params.address.label}
           subtitle={route.params.address.symbol.toUpperCase()}
           left={(props) => (
@@ -63,7 +64,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
               size={300}
               logo={{ uri: route.params.address.image }}
               logoSize={30}
-              logoBackgroundColor={theme.colors.card}
+              logoBackgroundColor={theme.colors.background}
             />
           </Surface>
           <Paragraph style={styles.address}>
@@ -74,6 +75,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
           </Paragraph>
           <Button
             style={styles.button}
+            labelStyle={styles.labelButton}
             onPress={() => {
               Clipboard.setString(route.params.address.address);
               ToastAndroid.show(t("copied"), ToastAndroid.SHORT);
@@ -86,22 +88,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
       </Card>
 
       <Card style={styles.card}>
-        <Card.Title
-          style={styles.cardTitle}
-          title={t("setAmount")}
-        ></Card.Title>
-        <Divider />
-        <Card.Content>
-          <TextInput
-            value={value}
-            onChangeText={setValue}
-            placeholder={t("amount")}
-          />
-        </Card.Content>
-      </Card>
-
-      <Card style={styles.card}>
-        <Card.Title style={styles.cardTitle} title={t("notes")}></Card.Title>
+        <Card.Title title={t("notes")}></Card.Title>
         <Divider />
         <Card.Content>
           <Paragraph>
@@ -109,6 +96,18 @@ const AddressScreen = ({ route, navigation }: Props) => {
               ? t("emptyNote")
               : route.params.address.notes}
           </Paragraph>
+        </Card.Content>
+      </Card>
+
+      <Card style={styles.card}>
+        <Card.Title title={t("setAmount")}></Card.Title>
+        <Divider />
+        <Card.Content>
+          <TextInput
+            value={value}
+            onChangeText={setValue}
+            placeholder={t("amount")}
+          />
         </Card.Content>
       </Card>
     </ScrollView>
@@ -124,11 +123,8 @@ const createStyles = (theme: Theme) => {
       alignItems: "center",
       margin: 10,
     },
-    cardTitle: {
-      // margin: 10,
-    },
     card: {
-      marginTop: 15,
+      margin: 5,
     },
     logo: {
       width: 50,
@@ -141,8 +137,13 @@ const createStyles = (theme: Theme) => {
     button: {
       marginTop: 30,
       width: "70%",
+      backgroundColor: theme.colors.accent,
+    },
+    labelButton: {
+      color: theme.dark ? theme.colors.text : theme.colors.background,
     },
     surface: {
+      backgroundColor: theme.dark ? theme.colors.text : theme.colors.background,
       elevation: 4,
       padding: 8,
     },

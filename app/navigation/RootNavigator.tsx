@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
+import { useTheme } from "react-native-paper";
 
 import MainScreen from "../screens/MainScreen";
 import AddressScreen from "../screens/AddressScreen";
@@ -18,9 +19,20 @@ export type RootStackParamList = {
 const RootNavigator = () => {
   const RootStack = createStackNavigator<RootStackParamList>();
   const { t } = useTranslation("common");
+  const theme = useTheme();
 
   return (
-    <RootStack.Navigator initialRouteName={"main"}>
+    <RootStack.Navigator
+      initialRouteName={"main"}
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: theme.colors.primary,
+        },
+        headerTintColor: theme.dark
+          ? theme.colors.background
+          : theme.colors.text,
+      }}
+    >
       <RootStack.Screen
         name="main"
         component={MainScreen}

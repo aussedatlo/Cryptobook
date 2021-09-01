@@ -1,25 +1,14 @@
 import React, { useMemo, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  Vibration,
-  Image,
-  Text,
-  ToastAndroid,
-} from "react-native";
-import {
-  RouteProp,
-  Theme,
-  useNavigation,
-  useTheme,
-} from "@react-navigation/native";
+import { View, StyleSheet, Vibration, Image, ToastAndroid } from "react-native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
-import { Button, TextInput } from "react-native-paper";
+import { Button, Card, Divider, TextInput, useTheme } from "react-native-paper";
 
 import { addAddress } from "../utils/Storage";
 import { WalletAddress } from "../types/WalletAddress";
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { Theme } from "react-native-paper/lib/typescript/types";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -61,41 +50,53 @@ const CreateScreen = ({ route, navigation }: Props) => {
 
   return (
     <View style={styles.root}>
-      <View style={styles.title}>
-        <Image source={{ uri: route.params.coin.image }} style={styles.logo} />
-        <Text style={styles.coinName}>{route.params.coin.name}</Text>
-        <Text style={styles.coinSymbol}>
-          {route.params.coin.symbol.toUpperCase()}
-        </Text>
-      </View>
-      <TextInput
-        style={styles.textInput}
-        placeholder={t("label")}
-        left={<TextInput.Icon name="label-outline" size={20} />}
-        value={label}
-        onChangeText={setLabel}
-      />
+      <Card style={styles.card}>
+        <Card.Title
+          title={route.params.coin.name}
+          subtitle={route.params.coin.symbol.toUpperCase()}
+          left={(props) => (
+            <Image
+              source={{ uri: route.params.coin.image }}
+              style={styles.logo}
+            />
+          )}
+        />
+        <Divider />
+        <Card.Content style={styles.cardContent}>
+          <TextInput
+            style={styles.textInput}
+            placeholder={t("label")}
+            left={<TextInput.Icon name="label-outline" size={20} />}
+            value={label}
+            onChangeText={setLabel}
+          />
 
-      <TextInput
-        style={styles.textInput}
-        placeholder={t("walletAddress")}
-        left={<TextInput.Icon name="qrcode" size={20} />}
-        right={<TextInput.Icon name="barcode-scan" size={20} />}
-        value={address}
-        onChangeText={setAddress}
-      />
+          <TextInput
+            style={styles.textInput}
+            placeholder={t("walletAddress")}
+            left={<TextInput.Icon name="qrcode" size={20} />}
+            right={<TextInput.Icon name="barcode-scan" size={20} />}
+            value={address}
+            onChangeText={setAddress}
+          />
 
-      <TextInput
-        style={styles.textInput}
-        placeholder={t("notes")}
-        left={<TextInput.Icon name="note-outline" size={20} />}
-        value={notes}
-        onChangeText={setNotes}
-      />
-
-      <Button style={styles.button} onPress={handlePress} mode="contained">
-        {t("create")}
-      </Button>
+          <TextInput
+            style={styles.textInput}
+            placeholder={t("notes")}
+            left={<TextInput.Icon name="note-outline" size={20} />}
+            value={notes}
+            onChangeText={setNotes}
+          />
+        </Card.Content>
+        <Button
+          style={styles.button}
+          labelStyle={styles.labelButton}
+          onPress={handlePress}
+          mode="contained"
+        >
+          {t("create")}
+        </Button>
+      </Card>
     </View>
   );
 };
@@ -104,12 +105,16 @@ const createStyles = (theme: Theme) => {
   return StyleSheet.create({
     root: {
       flex: 1,
-      backgroundColor: theme.colors.card,
-      paddingLeft: 20,
-      paddingRight: 20,
     },
     button: {
       marginTop: 30,
+      marginBottom: 30,
+      width: "70%",
+      backgroundColor: theme.colors.accent,
+      alignSelf: "center",
+    },
+    labelButton: {
+      color: theme.dark ? theme.colors.text : theme.colors.background,
     },
     logo: {
       width: 50,
@@ -128,6 +133,12 @@ const createStyles = (theme: Theme) => {
     },
     textInput: {
       marginBottom: 5,
+    },
+    card: {
+      margin: 5,
+    },
+    cardContent: {
+      marginTop: 30,
     },
   });
 };

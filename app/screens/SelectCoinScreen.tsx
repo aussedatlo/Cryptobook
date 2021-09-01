@@ -1,9 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Theme, useNavigation, useTheme } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { FlatList, StyleSheet, View, Image } from "react-native";
-import { Searchbar, Divider, List } from "react-native-paper";
+import { Searchbar, Divider, List, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import { Theme } from "react-native-paper/lib/typescript/types";
 
 const SelectCoinScreen = () => {
   const theme = useTheme();
@@ -57,6 +58,7 @@ const SelectCoinScreen = () => {
         placeholder="Search"
         onChangeText={(text) => setSearchQuery(text)}
         value={searchQuery}
+        style={styles.searchBar}
       />
       <FlatList
         data={data.filter((item: any) => {
@@ -83,6 +85,10 @@ const createStyles = (theme: Theme) => {
       height: 30,
       alignSelf: "center",
       margin: 5,
+    },
+    searchBar: {
+      alignSelf: "center",
+      borderRadius: 0,
     },
   });
 };
