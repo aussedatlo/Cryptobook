@@ -11,8 +11,6 @@ import CreateScreen from "../screens/CreateScreen";
 import SelectCoinScreen from "../screens/SelectCoinScreen";
 import OptionsScreen from "../screens/OptionsScreen";
 import { IWalletAddress } from "../models/addresses/addresses-model";
-import Logo from "../../assets/logo.svg";
-import { View } from "react-native";
 
 export type RootStackParamList = {
   main: undefined;
