@@ -4,6 +4,7 @@ import { Theme, useNavigation, useTheme } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
 
 import AddressList from "../component/AddressList";
+import { observer } from "mobx-react-lite";
 
 const MainScreen = () => {
   const theme = useTheme();
@@ -35,4 +36,4 @@ const createStyles = (theme: Theme) => {
   });
 };
 
-export default MainScreen;
+export default observer(MainScreen);
