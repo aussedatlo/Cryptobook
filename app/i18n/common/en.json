@@ -13,5 +13,7 @@
   "removed": "Removed",
   "label": "Label",
   "walletAddress": "Wallet Address",
-  "create": "Create"
+  "create": "Create",
+  "edit": "Edit",
+  "close": "Close"
 }
