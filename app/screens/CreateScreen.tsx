@@ -50,8 +50,6 @@ const CreateScreen = ({ route, navigation }: Props) => {
     }
   };
 
-  console.log(route.params);
-
   return (
     <View style={styles.root}>
       <Card style={styles.card}>
