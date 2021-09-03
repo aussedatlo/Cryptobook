@@ -57,7 +57,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         {
           text: t("delete"),
           onPress: () => {
-            addresses.removeAddress(route.params.address);
+            addresses.removeAddress(route.params);
             ToastAndroid.show(t("removed"), ToastAndroid.SHORT);
             navigation.goBack();
           },
@@ -113,13 +113,10 @@ const AddressScreen = ({ route, navigation }: Props) => {
     <ScrollView style={styles.root}>
       <Card style={styles.card}>
         <Card.Title
-          title={route.params.address.label}
-          subtitle={route.params.address.symbol.toUpperCase()}
+          title={route.params.label}
+          subtitle={route.params.symbol.toUpperCase()}
           left={(props) => (
-            <Image
-              source={{ uri: route.params.address.image }}
-              style={styles.logo}
-            />
+            <Image source={{ uri: route.params.image }} style={styles.logo} />
           )}
         />
         <Divider />
@@ -128,19 +125,17 @@ const AddressScreen = ({ route, navigation }: Props) => {
             <QRCode
               value={
                 value === ""
-                  ? route.params.address.address
-                  : route.params.address.address + "?amount=" + value
+                  ? route.params.address
+                  : route.params.address + "?amount=" + value
               }
               backgroundColor="transparent"
               size={300}
-              logo={{ uri: route.params.address.image }}
+              logo={{ uri: route.params.image }}
               logoSize={30}
               logoBackgroundColor={theme.colors.background}
             />
           </Surface>
-          <Paragraph style={styles.address}>
-            {route.params.address.address}
-          </Paragraph>
+          <Paragraph style={styles.address}>{route.params.address}</Paragraph>
           <Paragraph style={styles.address}>
             {value === "" ? <></> : +t("amount") + ": " + value}
           </Paragraph>
@@ -148,7 +143,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
             style={styles.button}
             labelStyle={styles.labelButton}
             onPress={() => {
-              Clipboard.setString(route.params.address.address);
+              Clipboard.setString(route.params.address);
               ToastAndroid.show(t("copied"), ToastAndroid.SHORT);
             }}
             mode="contained"
@@ -163,9 +158,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         <Divider />
         <Card.Content>
           <Paragraph>
-            {route.params.address.notes === ""
-              ? t("emptyNote")
-              : route.params.address.notes}
+            {route.params.notes === "" ? t("emptyNote") : route.params.notes}
           </Paragraph>
         </Card.Content>
       </Card>

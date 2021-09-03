@@ -8,6 +8,7 @@ import { Theme } from "react-native-paper/lib/typescript/types";
 import { observer } from "mobx-react-lite";
 
 import { useStore } from "../models/root-store/root-store-context";
+import { IWalletAddress } from "../models/addresses/addresses-model";
 
 const AddressList = () => {
   const { navigate } = useNavigation();
@@ -15,11 +16,11 @@ const AddressList = () => {
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { addresses } = useStore();
 
-  const RenderMenuItem = ({ item }: any) => {
+  const RenderMenuItem = ({ item }: { item: IWalletAddress }) => {
     return (
       <TouchableNativeFeedback
         onPress={() => {
-          navigate("address", { address: item });
+          navigate("address", item);
         }}
       >
         <Card style={styles.card}>

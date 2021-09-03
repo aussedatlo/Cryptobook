@@ -15,7 +15,7 @@ import BarCodeScannerScreen from "../screens/BarCodeScannerScreen";
 
 export type RootStackParamList = {
   main: undefined;
-  address: { address: IWalletAddress };
+  address: IWalletAddress;
   create: IWalletAddress;
   select: undefined;
   options: undefined;
