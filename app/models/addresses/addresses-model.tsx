@@ -38,4 +38,8 @@ export const AddressesModel = types
         self.addresses.filter((w) => w.label !== value.label)
       );
     },
+    replace: (old: IWalletAddress, value: IWalletAddress) => {
+      const index = self.addresses.findIndex((w) => old === w);
+      self.addresses[index] = value;
+    },
   }));

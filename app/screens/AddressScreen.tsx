@@ -44,6 +44,10 @@ const AddressScreen = ({ route, navigation }: Props) => {
   const { t } = useTranslation("common");
   const { addresses } = useStore();
 
+  const handleEdit = () => {
+    navigation.navigate("create", route.params);
+  };
+
   const handleDelete = () => {
     Alert.alert(
       t("alertDeleteTitle"),
@@ -88,7 +92,13 @@ const AddressScreen = ({ route, navigation }: Props) => {
           />
         }
       >
-        <Menu.Item onPress={() => {}} title={t("edit")} />
+        <Menu.Item
+          onPress={() => {
+            closeMenu();
+            handleEdit();
+          }}
+          title={t("edit")}
+        />
         <Divider />
         <Menu.Item
           onPress={() => {

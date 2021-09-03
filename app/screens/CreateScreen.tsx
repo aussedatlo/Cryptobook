@@ -1,6 +1,10 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
 import { View, StyleSheet, Vibration, Image, ToastAndroid } from "react-native";
-import { RouteProp, useNavigation } from "@react-navigation/native";
+import {
+  RouteProp,
+  useNavigation,
+  CommonActions,
+} from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Divider, TextInput, useTheme } from "react-native-paper";
@@ -29,6 +33,19 @@ const CreateScreen = ({ route, navigation }: Props) => {
   const { navigate } = useNavigation();
   const { t } = useTranslation("common");
   const { addresses } = useStore();
+  const isModification = route.params.label !== "";
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: isModification ? t("edit") : t("create"),
+    });
+  }, [isModification]);
+
+  useEffect(() => {
+    setLabel(route.params.label);
+    setNotes(route.params.notes);
+    setAddress(route.params.address);
+  }, [route.params]);
 
   const handlePress = async () => {
     Vibration.vibrate(50);
@@ -42,9 +59,20 @@ const CreateScreen = ({ route, navigation }: Props) => {
     };
 
     try {
-      addresses.addAddress(w);
-      ToastAndroid.show(t("created"), ToastAndroid.SHORT);
-      navigate("main");
+      if (isModification) {
+        addresses.replace(route.params, w);
+        ToastAndroid.show(t("edited"), ToastAndroid.SHORT);
+        navigation.dispatch(
+          CommonActions.reset({
+            index: 0,
+            routes: [{ name: "main" }, { name: "address", params: w }],
+          })
+        );
+      } else {
+        addresses.addAddress(w);
+        ToastAndroid.show(t("created"), ToastAndroid.SHORT);
+        navigate("main");
+      }
     } catch (error) {
       alert(error);
     }
@@ -103,7 +131,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
           onPress={handlePress}
           mode="contained"
         >
-          {t("create")}
+          {isModification ? t("edit") : t("create")}
         </Button>
       </Card>
     </View>
