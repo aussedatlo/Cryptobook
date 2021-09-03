@@ -16,6 +16,8 @@
   "create": "Create",
   "edit": "Edit",
   "close": "Close",
+  "darkMode": "Dark mode",
+  "darkModeDescription": "Change the app UI theme",
   "options": "Options",
   "scanner": "Scanner"
 }
