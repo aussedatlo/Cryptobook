@@ -23,7 +23,8 @@ export const setupRootStore = async () => {
     // if there's any problems loading, then let's at least fallback to
     // an empty state instead of crashing.
     rootStore = RootStoreModel.create({
-      settings: { darkMode: false },
+      settings: { dark: false },
+      addresses: {},
     });
 
     __DEV__ && console.error(e.message, null);
