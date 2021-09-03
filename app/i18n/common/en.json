@@ -15,5 +15,7 @@
   "walletAddress": "Wallet Address",
   "create": "Create",
   "edit": "Edit",
-  "close": "Close"
+  "close": "Close",
+  "options": "Options",
+  "scanner": "Scanner"
 }

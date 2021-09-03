@@ -57,11 +57,41 @@ const RootNavigator = () => {
           ),
         }}
       />
-      <RootStack.Screen name="address" component={AddressScreen} />
-      <RootStack.Screen name="create" component={CreateScreen} />
-      <RootStack.Screen name="select" component={SelectCoinScreen} />
-      <RootStack.Screen name="options" component={OptionsScreen} />
-      <RootStack.Screen name="scanner" component={BarCodeScannerScreen} />
+      <RootStack.Screen
+        name="address"
+        component={AddressScreen}
+        options={{
+          title: t("address"),
+        }}
+      />
+      <RootStack.Screen
+        name="create"
+        component={CreateScreen}
+        options={{
+          title: t("create"),
+        }}
+      />
+      <RootStack.Screen
+        name="select"
+        component={SelectCoinScreen}
+        options={{
+          title: t("select"),
+        }}
+      />
+      <RootStack.Screen
+        name="options"
+        component={OptionsScreen}
+        options={{
+          title: t("options"),
+        }}
+      />
+      <RootStack.Screen
+        name="scanner"
+        component={BarCodeScannerScreen}
+        options={{
+          title: t("scanner"),
+        }}
+      />
     </RootStack.Navigator>
   );
 };
