@@ -5,6 +5,14 @@ import { Searchbar, Divider, List, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { Theme } from "react-native-paper/lib/typescript/types";
+import { IWalletAddress } from "../models/addresses/addresses-model";
+
+export interface ICoinsMarket {
+  id: string;
+  name: string;
+  symbol: string;
+  image: string;
+}
 
 const SelectCoinScreen = () => {
   const theme = useTheme();
@@ -27,15 +35,25 @@ const SelectCoinScreen = () => {
       });
   }, []);
 
-  const renderItem = ({ item }: any) => {
+  const handleOnPress = (item: ICoinsMarket) => {
+    const w: IWalletAddress = {
+      label: "",
+      address: "",
+      notes: "",
+      image: item.image,
+      name: item.name,
+      symbol: item.symbol,
+    };
+    navigate("create", w);
+  };
+
+  const renderItem = ({ item }: { item: ICoinsMarket }) => {
     return (
       <>
         <List.Item
           title={item.name}
           description={item.symbol.toUpperCase()}
-          onPress={() => {
-            navigate("create", { coin: item });
-          }}
+          onPress={() => handleOnPress(item)}
           left={(props) => (
             <Image source={{ uri: item.image }} style={styles.logo} />
           )}
@@ -61,14 +79,14 @@ const SelectCoinScreen = () => {
         style={styles.searchBar}
       />
       <FlatList
-        data={data.filter((item: any) => {
+        data={data.filter((item: ICoinsMarket) => {
           return (
             item.name.toLocaleLowerCase().includes(searchQuery.toLowerCase()) ||
             item.symbol.toLocaleLowerCase().includes(searchQuery.toLowerCase())
           );
         })}
         renderItem={renderItem}
-        keyExtractor={(item: any) => item.id}
+        keyExtractor={(item: ICoinsMarket) => item.id}
       />
     </View>
   );

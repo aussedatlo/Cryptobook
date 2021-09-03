@@ -36,8 +36,9 @@ const CreateScreen = ({ route, navigation }: Props) => {
       address: address,
       notes: notes,
       label: label,
-      symbol: route.params.coin.symbol,
-      image: route.params.coin.image,
+      name: route.params.name,
+      symbol: route.params.symbol,
+      image: route.params.image,
     };
 
     try {
@@ -49,17 +50,16 @@ const CreateScreen = ({ route, navigation }: Props) => {
     }
   };
 
+  console.log(route.params);
+
   return (
     <View style={styles.root}>
       <Card style={styles.card}>
         <Card.Title
-          title={route.params.coin.name}
-          subtitle={route.params.coin.symbol.toUpperCase()}
+          title={route.params.name}
+          subtitle={route.params.symbol.toUpperCase()}
           left={(props) => (
-            <Image
-              source={{ uri: route.params.coin.image }}
-              style={styles.logo}
-            />
+            <Image source={{ uri: route.params.image }} style={styles.logo} />
           )}
         />
         <Divider />

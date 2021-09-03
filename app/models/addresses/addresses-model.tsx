@@ -5,6 +5,7 @@ export const WalletAddress = types.model({
   address: types.string,
   notes: types.string,
   image: types.string,
+  name: types.string,
   symbol: types.string,
 });
 
