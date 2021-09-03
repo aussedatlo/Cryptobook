@@ -86,7 +86,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         anchor={
           <Ionicons
             name="menu"
-            size={25}
+            size={30}
             style={styles.headerRightIcon}
             onPress={openMenu}
           />
@@ -116,6 +116,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => <HeaderRightComponent />,
+      headerRightContainerStyle: styles.headerRightContainer,
     });
   }, [navigation, route]);
 
@@ -193,11 +194,12 @@ const createStyles = (theme: Theme) => {
     headerRight: {
       display: "flex",
       flexDirection: "row",
-      marginRight: 10,
     },
     headerRightIcon: {
-      margin: 10,
-      color: theme.colors.background,
+      color: theme.dark ? theme.colors.background : theme.colors.text,
+    },
+    headerRightContainer: {
+      marginRight: 10,
     },
     root: {
       flex: 1,

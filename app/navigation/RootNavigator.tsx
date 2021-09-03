@@ -55,6 +55,9 @@ const RootNavigator = () => {
               }}
             />
           ),
+          headerRightContainerStyle: {
+            marginRight: 10,
+          },
         }}
       />
       <RootStack.Screen
