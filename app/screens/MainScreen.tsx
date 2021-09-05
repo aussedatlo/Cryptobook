@@ -2,9 +2,9 @@ import React, { useMemo } from "react";
 import { View, StyleSheet } from "react-native";
 import { Theme, useNavigation, useTheme } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
+import { observer } from "mobx-react-lite";
 
 import AddressList from "../component/AddressList";
-import { observer } from "mobx-react-lite";
 
 const MainScreen = () => {
   const theme = useTheme();
