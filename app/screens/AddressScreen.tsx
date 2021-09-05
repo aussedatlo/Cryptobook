@@ -147,9 +147,13 @@ const AddressScreen = ({ route, navigation }: Props) => {
             />
           </Surface>
           <Paragraph style={styles.address}>{route.params.address}</Paragraph>
-          <Paragraph style={styles.address}>
-            {value === "" ? <></> : +t("amount") + ": " + value}
-          </Paragraph>
+          {value === "" ? (
+            <></>
+          ) : (
+            <Paragraph style={styles.address}>
+              {t("amount") + ": " + value}
+            </Paragraph>
+          )}
           <Button
             style={styles.button}
             labelStyle={styles.labelButton}
