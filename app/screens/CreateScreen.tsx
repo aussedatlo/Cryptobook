@@ -58,6 +58,22 @@ const CreateScreen = ({ route, navigation }: Props) => {
       image: route.params.image,
     };
 
+    if (w.label === "") {
+      ToastAndroid.show(t("errorLabelEmpty"), ToastAndroid.SHORT);
+      return;
+    }
+
+    if (w.address === "") {
+      ToastAndroid.show(t("errorAddressEmpty"), ToastAndroid.SHORT);
+      return;
+    }
+
+    // Check if other address exist with this label
+    if (w.label !== route.params.label && addresses.exist(w.label)) {
+      ToastAndroid.show(t("errorAlreadyExist"), ToastAndroid.SHORT);
+      return;
+    }
+
     try {
       if (isModification) {
         addresses.replace(route.params, w);

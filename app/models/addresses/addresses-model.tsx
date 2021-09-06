@@ -42,4 +42,7 @@ export const AddressesModel = types
       const index = self.addresses.findIndex((w) => old === w);
       self.addresses[index] = value;
     },
+    exist: (value: string) => {
+      return self.addresses.filter((w) => w.label === value).length > 0;
+    },
   }));

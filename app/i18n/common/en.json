@@ -24,5 +24,8 @@
   "share": "Share",
   "alertDeleteTitle": "Delete address",
   "alertDeleteMessage": "Are you sure you want to delete this address ?",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "errorAlreadyExist": "Error, already exist",
+  "errorLabelEmpty": "Error, label cannot be empty",
+  "errorAddressEmpty": "Error, address cannot be empty"
 }
