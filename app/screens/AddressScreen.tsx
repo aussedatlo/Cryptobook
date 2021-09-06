@@ -201,7 +201,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
       <Card style={styles.card}>
         <Card.Title title={t("notes")}></Card.Title>
         <Divider />
-        <Card.Content>
+        <Card.Content style={styles.content}>
           <Paragraph>
             {route.params.notes === "" ? t("emptyNote") : route.params.notes}
           </Paragraph>
@@ -223,7 +223,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         <Card style={styles.card}>
           <Card.Title title={t("balance")}></Card.Title>
           <Divider />
-          <Card.Content>
+          <Card.Content style={styles.content}>
             <Paragraph>{balance}</Paragraph>
           </Card.Content>
         </Card>
@@ -234,7 +234,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
       <Card style={styles.card}>
         <Card.Title title={t("setAmount")}></Card.Title>
         <Divider />
-        <Card.Content>
+        <Card.Content style={styles.content}>
           <TextInput
             value={value}
             onChangeText={setValue}
@@ -291,6 +291,9 @@ const createStyles = (theme: Theme) => {
     },
     activityIndicator: {
       margin: 10,
+    },
+    content: {
+      marginTop: 10,
     },
   });
 };
