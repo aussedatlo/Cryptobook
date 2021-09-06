@@ -231,7 +231,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         <></>
       )}
 
-      <Card style={styles.card}>
+      {/* <Card style={styles.card}>
         <Card.Title title={t("setAmount")}></Card.Title>
         <Divider />
         <Card.Content style={styles.content}>
@@ -241,7 +241,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
             placeholder={t("amount")}
           />
         </Card.Content>
-      </Card>
+      </Card> */}
     </ScrollView>
   );
 };
