@@ -19,5 +19,6 @@
   "darkMode": "Dark mode",
   "darkModeDescription": "Change the app UI theme",
   "options": "Options",
-  "scanner": "Scanner"
+  "scanner": "Scanner",
+  "share": "Share"
 }

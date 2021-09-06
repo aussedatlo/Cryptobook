@@ -5,6 +5,7 @@ import {
   ScrollView,
   ToastAndroid,
   Alert,
+  Share,
 } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -98,6 +99,16 @@ const AddressScreen = ({ route, navigation }: Props) => {
             handleEdit();
           }}
           title={t("edit")}
+        />
+        <Divider />
+        <Menu.Item
+          onPress={async () => {
+            closeMenu();
+            await Share.share({
+              message: route.params.address,
+            });
+          }}
+          title={t("share")}
         />
         <Divider />
         <Menu.Item
