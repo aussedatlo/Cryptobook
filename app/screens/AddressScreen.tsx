@@ -23,10 +23,13 @@ import {
   Surface,
   useTheme,
   Menu,
+  ActivityIndicator,
 } from "react-native-paper";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { useStore } from "../models/root-store/root-store-context";
+import { useEffect } from "react";
+import { getBalance } from "../utils/BlockchainInfo";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -42,6 +45,8 @@ const AddressScreen = ({ route, navigation }: Props) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [value, setValue] = React.useState<string>("");
+  const [balance, setBalance] = React.useState<number | undefined>(undefined);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const { t } = useTranslation("common");
   const { addresses } = useStore();
 
@@ -131,6 +136,20 @@ const AddressScreen = ({ route, navigation }: Props) => {
     });
   }, [navigation, route]);
 
+  const initBalance = async () => {
+    const balance: number | undefined = await getBalance(
+      route.params.symbol,
+      route.params.address
+    );
+    setBalance(balance);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    initBalance();
+  }, []);
+
   return (
     <ScrollView style={styles.root}>
       <Card style={styles.card}>
@@ -189,6 +208,29 @@ const AddressScreen = ({ route, navigation }: Props) => {
         </Card.Content>
       </Card>
 
+      {loading ? (
+        <ActivityIndicator
+          style={styles.activityIndicator}
+          animating={true}
+          color={theme.colors.accent}
+          size={30}
+        />
+      ) : (
+        <></>
+      )}
+
+      {balance !== undefined ? (
+        <Card style={styles.card}>
+          <Card.Title title={t("balance")}></Card.Title>
+          <Divider />
+          <Card.Content>
+            <Paragraph>{balance}</Paragraph>
+          </Card.Content>
+        </Card>
+      ) : (
+        <></>
+      )}
+
       <Card style={styles.card}>
         <Card.Title title={t("setAmount")}></Card.Title>
         <Divider />
@@ -246,6 +288,9 @@ const createStyles = (theme: Theme) => {
       backgroundColor: theme.dark ? theme.colors.text : theme.colors.background,
       elevation: 4,
       padding: 8,
+    },
+    activityIndicator: {
+      margin: 10,
     },
   });
 };
