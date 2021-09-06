@@ -1,5 +1,12 @@
 import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
-import { View, StyleSheet, Vibration, Image, ToastAndroid } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Vibration,
+  Image,
+  ToastAndroid,
+  Keyboard,
+} from "react-native";
 import {
   RouteProp,
   useNavigation,
@@ -49,6 +56,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
 
   const handlePress = async () => {
     Vibration.vibrate(50);
+    Keyboard.dismiss();
     const w: IWalletAddress = {
       address: address,
       notes: notes,
