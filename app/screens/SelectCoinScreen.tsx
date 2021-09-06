@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FlatList, StyleSheet, View, Image } from "react-native";
 import { Searchbar, Divider, List, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
-import axios from "axios";
 import { Theme } from "react-native-paper/lib/typescript/types";
+
 import { IWalletAddress } from "../models/addresses/addresses-model";
 import { useStore } from "../models/root-store/root-store-context";
 import { ICoin } from "../models/market/market-model";
