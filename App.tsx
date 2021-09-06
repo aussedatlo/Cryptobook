@@ -11,14 +11,22 @@ import { RootStoreProvider } from "./app/models/root-store/root-store-context";
 import { setupRootStore } from "./app/models/root-store/setup-root-store";
 import RootNavigator from "./app/navigation/RootNavigator";
 import ThemeProvider from "./app/providers/ThemeProvider";
+import { getCoin } from "./app/services/Coingecko.service";
 
 export default function App() {
   const [rootStore, setRootStore] = useState<RootStoreInstance | undefined>(
     undefined
   );
 
+  const init = async () => {
+    const rootStore = await setupRootStore();
+    setRootStore(rootStore);
+
+    getCoin().then((res) => rootStore.market.setCoins(res));
+  };
+
   useEffect(() => {
-    setupRootStore().then(setRootStore);
+    init();
   }, []);
 
   if (!rootStore) {

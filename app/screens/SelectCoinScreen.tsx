@@ -6,36 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { Theme } from "react-native-paper/lib/typescript/types";
 import { IWalletAddress } from "../models/addresses/addresses-model";
-
-export interface ICoinsMarket {
-  id: string;
-  name: string;
-  symbol: string;
-  image: string;
-}
+import { useStore } from "../models/root-store/root-store-context";
+import { ICoin } from "../models/market/market-model";
 
 const SelectCoinScreen = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { navigate } = useNavigation();
-  const [data, setData] = useState([]);
+  const { market } = useStore();
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  useEffect(() => {
-    axios
-      .get(`https://api.coingecko.com/api/v3/coins/markets`, {
-        params: {
-          vs_currency: "usd",
-          per_page: 200,
-          price_change_percentage: "1h,24h,7d",
-        },
-      })
-      .then((res) => {
-        setData(res.data);
-      });
-  }, []);
-
-  const handleOnPress = (item: ICoinsMarket) => {
+  const handleOnPress = (item: ICoin) => {
     const w: IWalletAddress = {
       label: "",
       address: "",
@@ -47,7 +28,7 @@ const SelectCoinScreen = () => {
     navigate("create", w);
   };
 
-  const renderItem = ({ item }: { item: ICoinsMarket }) => {
+  const renderItem = ({ item }: { item: ICoin }) => {
     return (
       <>
         <List.Item
@@ -79,14 +60,14 @@ const SelectCoinScreen = () => {
         style={styles.searchBar}
       />
       <FlatList
-        data={data.filter((item: ICoinsMarket) => {
+        data={market.coins.filter((item: ICoin) => {
           return (
             item.name.toLocaleLowerCase().includes(searchQuery.toLowerCase()) ||
             item.symbol.toLocaleLowerCase().includes(searchQuery.toLowerCase())
           );
         })}
         renderItem={renderItem}
-        keyExtractor={(item: ICoinsMarket) => item.id}
+        keyExtractor={(item: ICoin) => item.id}
       />
     </View>
   );

@@ -1,5 +1,6 @@
 import { types, Instance } from "mobx-state-tree";
 import { AddressesModel } from "../addresses/addresses-model";
+import { MarketModel } from "../market/market-model";
 import { SettingsModel } from "../settings/settings-model";
 
 /**
@@ -8,6 +9,7 @@ import { SettingsModel } from "../settings/settings-model";
 export const RootStoreModel = types.model({
   settings: types.optional(SettingsModel, {} as any),
   addresses: types.optional(AddressesModel, {} as any),
+  market: types.optional(MarketModel, {} as any),
 });
 
 /**

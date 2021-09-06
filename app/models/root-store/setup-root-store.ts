@@ -25,6 +25,7 @@ export const setupRootStore = async () => {
     rootStore = RootStoreModel.create({
       settings: { dark: false },
       addresses: {},
+      market: {},
     });
 
     __DEV__ && console.error(e.message, null);
