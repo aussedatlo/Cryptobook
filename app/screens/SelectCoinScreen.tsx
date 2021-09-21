@@ -5,7 +5,7 @@ import { Searchbar, Divider, List, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { Theme } from "react-native-paper/lib/typescript/types";
 
-import { IWalletAddress } from "../models/addresses/addresses-model";
+import { IWallet } from "../models/wallets/wallets-model";
 import { useStore } from "../models/root-store/root-store-context";
 import { ICoin } from "../models/market/market-model";
 
@@ -17,7 +17,7 @@ const SelectCoinScreen = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
 
   const handleOnPress = (item: ICoin) => {
-    const w: IWalletAddress = {
+    const w: IWallet = {
       label: "",
       address: "",
       notes: "",

@@ -18,7 +18,7 @@ import { Button, Card, Divider, TextInput, useTheme } from "react-native-paper";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { Theme } from "react-native-paper/lib/typescript/types";
-import { IWalletAddress } from "../models/addresses/addresses-model";
+import { IWallet } from "../models/wallets/wallets-model";
 import { useStore } from "../models/root-store/root-store-context";
 
 type AddressScreenNavigationProp = StackNavigationProp<
@@ -39,7 +39,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
   const [address, setAddress] = useState<string>("");
   const { navigate } = useNavigation();
   const { t } = useTranslation("common");
-  const { addresses } = useStore();
+  const { wallets } = useStore();
   const isModification = route.params.label !== "";
 
   useLayoutEffect(() => {
@@ -57,7 +57,7 @@ const CreateScreen = ({ route, navigation }: Props) => {
   const handlePress = async () => {
     Vibration.vibrate(50);
     Keyboard.dismiss();
-    const w: IWalletAddress = {
+    const w: IWallet = {
       address: address,
       notes: notes,
       label: label,
@@ -77,23 +77,23 @@ const CreateScreen = ({ route, navigation }: Props) => {
     }
 
     // Check if other address exist with this label
-    if (w.label !== route.params.label && addresses.exist(w.label)) {
+    if (w.label !== route.params.label && wallets.exist(w.label)) {
       ToastAndroid.show(t("errorAlreadyExist"), ToastAndroid.SHORT);
       return;
     }
 
     try {
       if (isModification) {
-        addresses.replace(route.params, w);
+        wallets.replaceWallet(route.params, w);
         ToastAndroid.show(t("edited"), ToastAndroid.SHORT);
         navigation.dispatch(
           CommonActions.reset({
             index: 0,
-            routes: [{ name: "main" }, { name: "address", params: w }],
+            routes: [{ name: "main" }, { name: "wallet", params: w }],
           })
         );
       } else {
-        addresses.addAddress(w);
+        wallets.addWallet(w);
         ToastAndroid.show(t("created"), ToastAndroid.SHORT);
         navigate("main");
       }

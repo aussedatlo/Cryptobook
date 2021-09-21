@@ -19,7 +19,6 @@ import {
   Button,
   Paragraph,
   Divider,
-  TextInput,
   Surface,
   useTheme,
   Menu,
@@ -33,22 +32,22 @@ import { getBalance } from "../utils/BlockchainInfo";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "address"
+  "wallet"
 >;
-type AddressScreenRouteProp = RouteProp<RootStackParamList, "address">;
+type AddressScreenRouteProp = RouteProp<RootStackParamList, "wallet">;
 type Props = {
   route: AddressScreenRouteProp;
   navigation: AddressScreenNavigationProp;
 };
 
-const AddressScreen = ({ route, navigation }: Props) => {
+const WalletScreen = ({ route, navigation }: Props) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const [value, setValue] = React.useState<string>("");
   const [balance, setBalance] = React.useState<number | undefined>(undefined);
   const [loading, setLoading] = React.useState<boolean>(true);
   const { t } = useTranslation("common");
-  const { addresses } = useStore();
+  const { wallets } = useStore();
 
   const handleEdit = () => {
     navigation.navigate("create", route.params);
@@ -67,7 +66,7 @@ const AddressScreen = ({ route, navigation }: Props) => {
         {
           text: t("delete"),
           onPress: () => {
-            addresses.removeAddress(route.params);
+            wallets.removeWallet(route.params);
             ToastAndroid.show(t("removed"), ToastAndroid.SHORT);
             navigation.goBack();
           },
@@ -298,4 +297,4 @@ const createStyles = (theme: Theme) => {
   });
 };
 
-export default AddressScreen;
+export default WalletScreen;

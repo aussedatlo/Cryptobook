@@ -8,19 +8,19 @@ import { Theme } from "react-native-paper/lib/typescript/types";
 import { observer } from "mobx-react-lite";
 
 import { useStore } from "../models/root-store/root-store-context";
-import { IWalletAddress } from "../models/addresses/addresses-model";
+import { IWallet } from "../models/wallets/wallets-model";
 
-const AddressList = () => {
+const WalletList = () => {
   const { navigate } = useNavigation();
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
-  const { addresses } = useStore();
+  const { wallets } = useStore();
 
-  const RenderMenuItem = ({ item }: { item: IWalletAddress }) => {
+  const RenderMenuItem = ({ item }: { item: IWallet }) => {
     return (
       <TouchableNativeFeedback
         onPress={() => {
-          navigate("address", item);
+          navigate("wallet", item);
         }}
       >
         <Card style={styles.card}>
@@ -50,7 +50,7 @@ const AddressList = () => {
 
   return (
     <ScrollView>
-      {addresses.addresses.map((item: any) => (
+      {wallets.wallets.map((item: any) => (
         <RenderMenuItem item={item} key={item.label} />
       ))}
     </ScrollView>
@@ -73,4 +73,4 @@ const createStyles = (theme: Theme) => {
   });
 };
 
-export default observer(AddressList);
+export default observer(WalletList);

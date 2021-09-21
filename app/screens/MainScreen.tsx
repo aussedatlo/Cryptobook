@@ -4,7 +4,7 @@ import { Theme, useNavigation, useTheme } from "@react-navigation/native";
 import { FAB } from "react-native-paper";
 import { observer } from "mobx-react-lite";
 
-import AddressList from "../component/AddressList";
+import WalletList from "../component/WalletList";
 
 const MainScreen = () => {
   const theme = useTheme();
@@ -13,7 +13,7 @@ const MainScreen = () => {
 
   return (
     <View style={styles.root}>
-      <AddressList />
+      <WalletList />
       <FAB style={styles.fab} icon="plus" onPress={() => navigate("select")} />
     </View>
   );

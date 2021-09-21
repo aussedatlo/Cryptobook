@@ -6,17 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 import MainScreen from "../screens/MainScreen";
-import AddressScreen from "../screens/AddressScreen";
+import WalletScreen from "../screens/WalletScreen";
 import CreateScreen from "../screens/CreateScreen";
 import SelectCoinScreen from "../screens/SelectCoinScreen";
 import OptionsScreen from "../screens/OptionsScreen";
-import { IWalletAddress } from "../models/addresses/addresses-model";
+import { IWallet } from "../models/wallets/wallets-model";
 import BarCodeScannerScreen from "../screens/BarCodeScannerScreen";
 
 export type RootStackParamList = {
   main: undefined;
-  address: IWalletAddress;
-  create: IWalletAddress;
+  wallet: IWallet;
+  create: IWallet;
   select: undefined;
   options: undefined;
   scanner: { onGoBack: (data: string) => void };
@@ -61,10 +61,10 @@ const RootNavigator = () => {
         }}
       />
       <RootStack.Screen
-        name="address"
-        component={AddressScreen}
+        name="wallet"
+        component={WalletScreen}
         options={{
-          title: t("address"),
+          title: t("wallet"),
         }}
       />
       <RootStack.Screen
