@@ -31,7 +31,7 @@ export const WalletsModel = types
       self.wallets[index] = value;
     },
     removeWallet: (value: IWallet) => {
-      self.wallets.replace(self.wallets.filter((w) => w.label !== value.label));
+      self.wallets.replace(self.wallets.filter((w) => w !== value));
     },
     exist: (value: string) => {
       return self.wallets.filter((w) => w.label === value).length > 0;
