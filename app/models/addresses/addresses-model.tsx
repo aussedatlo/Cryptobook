@@ -15,9 +15,6 @@ export const WalletAddress = types.model({
 export interface IWalletAddress extends Instance<typeof WalletAddress> {}
 export interface IWalletAddress extends SnapshotOut<typeof WalletAddress> {}
 
-export interface ISettings extends Instance<typeof AddressesModel> {}
-export interface ISettingsSnapshot extends SnapshotOut<typeof AddressesModel> {}
-
 export const AddressesModel = types
   .model({
     addresses: types.optional(types.array(WalletAddress), []),
