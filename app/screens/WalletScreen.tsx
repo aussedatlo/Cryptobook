@@ -50,7 +50,7 @@ const WalletScreen = ({ route, navigation }: Props) => {
   const { wallets } = useStore();
 
   const handleEdit = () => {
-    navigation.navigate("create", route.params);
+    navigation.navigate("edit", route.params);
   };
 
   const handleDelete = () => {

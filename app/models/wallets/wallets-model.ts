@@ -1,6 +1,7 @@
 import { Instance, types, SnapshotOut } from "mobx-state-tree";
 
 export const Wallet = types.model({
+  id: types.string,
   label: types.string,
   address: types.string,
   notes: types.string,
@@ -13,7 +14,7 @@ export const Wallet = types.model({
 // interface is much more optimized for the typescript compiler
 // https://mobx-state-tree.js.org/tips/typescript#using-a-mst-type-at-design-time
 export interface IWallet extends Instance<typeof Wallet> {}
-export interface IWallet extends SnapshotOut<typeof Wallet> {}
+export interface IWalletSnapshotOut extends SnapshotOut<typeof Wallet> {}
 
 export const WalletsModel = types
   .model({
@@ -27,11 +28,11 @@ export const WalletsModel = types
       self.wallets.push(value);
     },
     replaceWallet: (old: IWallet, value: IWallet) => {
-      const index = self.wallets.findIndex((w) => old === w);
+      const index = self.wallets.findIndex((w) => old.id === w.id);
       self.wallets[index] = value;
     },
     removeWallet: (value: IWallet) => {
-      self.wallets.replace(self.wallets.filter((w) => w !== value));
+      self.wallets.replace(self.wallets.filter((w) => w.id !== value.id));
     },
     exist: (value: string) => {
       return self.wallets.filter((w) => w.label === value).length > 0;

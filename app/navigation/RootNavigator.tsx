@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import MainScreen from "../screens/MainScreen";
 import WalletScreen from "../screens/WalletScreen";
 import CreateScreen from "../screens/CreateScreen";
+import EditScreen from "../screens/EditScreen";
 import SelectCoinScreen from "../screens/SelectCoinScreen";
 import OptionsScreen from "../screens/OptionsScreen";
 import { IWallet } from "../models/wallets/wallets-model";
@@ -17,9 +18,10 @@ export type RootStackParamList = {
   main: undefined;
   wallet: IWallet;
   create: IWallet;
+  edit: IWallet;
   select: undefined;
   options: undefined;
-  scanner: { onGoBack: (data: string) => void };
+  scanner: undefined;
 };
 
 const RootNavigator = () => {
@@ -72,6 +74,13 @@ const RootNavigator = () => {
         component={CreateScreen}
         options={{
           title: t("create"),
+        }}
+      />
+      <RootStack.Screen
+        name="edit"
+        component={EditScreen}
+        options={{
+          title: t("edit"),
         }}
       />
       <RootStack.Screen

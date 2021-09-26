@@ -26,6 +26,7 @@
   "alertDeleteMessage": "Are you sure you want to delete this address ?",
   "cancel": "Cancel",
   "balance": "Balance",
+  "wallet": "Wallet",
   "errorAlreadyExist": "Error, already exist",
   "errorLabelEmpty": "Error, label cannot be empty",
   "errorAddressEmpty": "Error, address cannot be empty"

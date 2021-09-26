@@ -18,6 +18,7 @@ const SelectCoinScreen = () => {
 
   const handleOnPress = (item: ICoin) => {
     const w: IWallet = {
+      id: item.symbol + ":" + new Date().getTime(),
       label: "",
       address: "",
       notes: "",

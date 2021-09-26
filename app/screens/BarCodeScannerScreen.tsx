@@ -3,11 +3,12 @@ import { Text, View, StyleSheet } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { Theme } from "react-native-paper/lib/typescript/types";
 import { useTheme, Button } from "react-native-paper";
-import { RouteProp } from "@react-navigation/native";
+import { CommonActions, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
+import { IWallet } from "../models/wallets/wallets-model";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -35,8 +36,26 @@ const BarCodeScannerScreen = ({ route, navigation }: Props) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    route.params.onGoBack(data);
-    navigation.goBack();
+
+    const routes: any = navigation.getState().routes;
+    const back: any = routes[routes.length - 2];
+
+    const w: IWallet = {
+      id: back.params.id,
+      label: back.params.label,
+      image: back.params.image,
+      name: back.params.name,
+      notes: back.params.notes,
+      symbol: back.params.symbol,
+      address: data,
+    };
+
+    navigation.dispatch(
+      CommonActions.navigate({
+        name: back.name,
+        params: w,
+      })
+    );
   };
 
   if (hasPermission === null) {

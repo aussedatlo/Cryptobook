@@ -1,6 +1,6 @@
 import React from "react";
 import { Vibration, ToastAndroid, Keyboard } from "react-native";
-import { RouteProp, useNavigation } from "@react-navigation/native";
+import { RouteProp, CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
 
@@ -11,23 +11,21 @@ import WalletInputView from "../component/WalletInputView";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "create"
+  "edit"
 >;
-type AddressScreenRouteProp = RouteProp<RootStackParamList, "create">;
+type AddressScreenRouteProp = RouteProp<RootStackParamList, "edit">;
 type Props = {
   route: AddressScreenRouteProp;
   navigation: AddressScreenNavigationProp;
 };
 
-const CreateScreen = ({ route, navigation }: Props) => {
-  const { navigate } = useNavigation();
+const EditScreen = ({ route, navigation }: Props) => {
   const { t } = useTranslation("common");
   const { wallets } = useStore();
 
   const handleSubmit = (label: string, address: string, notes: string) => {
     Vibration.vibrate(50);
     Keyboard.dismiss();
-
     const w: IWallet = {
       id: route.params.id,
       address: address,
@@ -39,9 +37,14 @@ const CreateScreen = ({ route, navigation }: Props) => {
     };
 
     try {
-      wallets.addWallet(w);
-      ToastAndroid.show(t("created"), ToastAndroid.SHORT);
-      navigate("main");
+      wallets.replaceWallet(route.params, w);
+      ToastAndroid.show(t("edited"), ToastAndroid.SHORT);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: "main" }, { name: "wallet", params: w }],
+        })
+      );
     } catch (error) {
       alert(error);
     }
@@ -50,10 +53,10 @@ const CreateScreen = ({ route, navigation }: Props) => {
   return (
     <WalletInputView
       wallet={route.params}
-      buttonText={t("create")}
+      buttonText={t("edit")}
       onSubmit={handleSubmit}
     />
   );
 };
 
-export default CreateScreen;
+export default EditScreen;
