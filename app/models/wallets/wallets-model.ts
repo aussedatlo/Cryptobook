@@ -3,7 +3,7 @@ import { Instance, types, SnapshotOut } from "mobx-state-tree";
 export const Wallet = types.model({
   id: types.string,
   label: types.string,
-  address: types.string,
+  address: types.array(types.string),
   notes: types.string,
   image: types.string,
   name: types.string,

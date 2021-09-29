@@ -6,6 +6,7 @@ import { useTheme, Button } from "react-native-paper";
 import { CommonActions, RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
+import { cast } from "mobx-state-tree";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { IWallet } from "../models/wallets/wallets-model";
@@ -40,6 +41,12 @@ const BarCodeScannerScreen = ({ route, navigation }: Props) => {
     const routes: any = navigation.getState().routes;
     const back: any = routes[routes.length - 2];
 
+    let newAddress: Array<string> = [];
+    for (let a of back.params.address) {
+      newAddress.push(a);
+    }
+    newAddress[route.params.index] = data;
+
     const w: IWallet = {
       id: back.params.id,
       label: back.params.label,
@@ -47,7 +54,7 @@ const BarCodeScannerScreen = ({ route, navigation }: Props) => {
       name: back.params.name,
       notes: back.params.notes,
       symbol: back.params.symbol,
-      address: data,
+      address: cast(newAddress),
     };
 
     navigation.dispatch(

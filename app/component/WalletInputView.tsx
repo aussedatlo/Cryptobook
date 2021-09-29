@@ -9,7 +9,7 @@ import { IWallet } from "../models/wallets/wallets-model";
 type Props = {
   wallet: IWallet;
   buttonText: string;
-  onSubmit: (label: string, address: string, notes: string) => void;
+  onSubmit: (label: string, address: Array<string>, notes: string) => void;
 };
 
 const WalletInputView = (props: Props) => {

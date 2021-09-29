@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, View, Image } from "react-native";
 import { Searchbar, Divider, List, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { Theme } from "react-native-paper/lib/typescript/types";
+import { cast } from "mobx-state-tree";
 
 import { IWallet } from "../models/wallets/wallets-model";
 import { useStore } from "../models/root-store/root-store-context";
@@ -20,7 +21,7 @@ const SelectCoinScreen = () => {
     const w: IWallet = {
       id: item.symbol + ":" + new Date().getTime(),
       label: "",
-      address: "",
+      address: cast([]),
       notes: "",
       image: item.image,
       name: item.name,

@@ -21,7 +21,7 @@ export type RootStackParamList = {
   edit: IWallet;
   select: undefined;
   options: undefined;
-  scanner: undefined;
+  scanner: { index: number };
 };
 
 const RootNavigator = () => {

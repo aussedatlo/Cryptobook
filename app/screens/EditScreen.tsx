@@ -3,6 +3,7 @@ import { Vibration, ToastAndroid, Keyboard } from "react-native";
 import { RouteProp, CommonActions } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
+import { cast } from "mobx-state-tree";
 
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { IWallet } from "../models/wallets/wallets-model";
@@ -23,12 +24,16 @@ const EditScreen = ({ route, navigation }: Props) => {
   const { t } = useTranslation("common");
   const { wallets } = useStore();
 
-  const handleSubmit = (label: string, address: string, notes: string) => {
+  const handleSubmit = (
+    label: string,
+    address: Array<string>,
+    notes: string
+  ) => {
     Vibration.vibrate(50);
     Keyboard.dismiss();
     const w: IWallet = {
       id: route.params.id,
-      address: address,
+      address: cast(address),
       notes: notes,
       label: label,
       name: route.params.name,

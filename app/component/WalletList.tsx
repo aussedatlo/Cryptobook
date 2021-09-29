@@ -6,6 +6,7 @@ import { Card, Menu, useTheme } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import { Theme } from "react-native-paper/lib/typescript/types";
 import { observer } from "mobx-react-lite";
+import { useTranslation } from "react-i18next";
 
 import { useStore } from "../models/root-store/root-store-context";
 import { IWallet } from "../models/wallets/wallets-model";
@@ -15,6 +16,7 @@ const WalletList = () => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { wallets } = useStore();
+  const { t } = useTranslation("common");
 
   const RenderMenuItem = ({ item }: { item: IWallet }) => {
     return (
@@ -26,7 +28,7 @@ const WalletList = () => {
         <Card style={styles.card}>
           <Card.Title
             title={item.label}
-            subtitle={item.address}
+            subtitle={item.address.length + " " + t("addresses")}
             left={(props) => (
               <Image
                 source={{ uri: item.image }}
