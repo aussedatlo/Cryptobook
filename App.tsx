@@ -21,6 +21,12 @@ export default function App() {
   const init = async () => {
     const rootStore = await setupRootStore();
     setRootStore(rootStore);
+    rootStore.wallets.wallets.map((w) => {
+      w.address.map((a) => {
+        rootStore.blockchainInfo.clear();
+        rootStore.blockchainInfo.syncBlockchainInfo(a);
+      });
+    });
 
     getCoin().then((res) => rootStore.market.setCoins(res));
   };

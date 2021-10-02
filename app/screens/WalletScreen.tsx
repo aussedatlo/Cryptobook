@@ -1,11 +1,5 @@
 import React, { useLayoutEffect, useMemo } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  ToastAndroid,
-  Alert,
-  Text,
-} from "react-native";
+import { StyleSheet, ScrollView, ToastAndroid, Alert } from "react-native";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useTranslation } from "react-i18next";
@@ -16,8 +10,8 @@ import { Divider, useTheme, Menu } from "react-native-paper";
 import { RootStackParamList } from "../navigation/RootNavigator";
 import { useStore } from "../models/root-store/root-store-context";
 import AddressView from "../component/AddressView";
-import { useEffect } from "react";
-import { getBtcBalance } from "../services/BlockCypher.service";
+import TransactionView from "../component/TransactionView";
+import { IBlockchainTsx } from "../models/blockchain/blockchain-btc-model";
 
 type AddressScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -33,7 +27,7 @@ const WalletScreen = ({ route, navigation }: Props) => {
   const theme = useTheme();
   const styles = useMemo(() => createStyles(theme), [theme]);
   const { t } = useTranslation("common");
-  const { wallets } = useStore();
+  const { wallets, blockchainInfo } = useStore();
 
   const handleEdit = () => {
     navigation.navigate("edit", route.params);
@@ -111,15 +105,29 @@ const WalletScreen = ({ route, navigation }: Props) => {
     });
   }, [navigation, route]);
 
+  let transactions: Array<IBlockchainTsx> = [];
+  route.params.address.map((x) =>
+    blockchainInfo
+      .getBlockchainTxs(x)
+      .map((item: IBlockchainTsx) => transactions.push(item))
+  );
+  transactions = transactions.sort(function (a, b) {
+    return new Date(b.received).getTime() - new Date(a.received).getTime();
+  });
+
+  console.log(transactions);
+
   return (
     <ScrollView style={styles.root}>
-      <Text>{route.params.balance}</Text>
       {route.params.address.map((x, index) => (
         <AddressView
           key={index}
           title={t("address") + " " + (index + 1)}
           address={x}
         />
+      ))}
+      {transactions.map((x) => (
+        <TransactionView data={x} />
       ))}
     </ScrollView>
   );
@@ -140,38 +148,7 @@ const createStyles = (theme: Theme) => {
     root: {
       flex: 1,
     },
-    cardContent: {
-      alignItems: "center",
-      margin: 10,
-    },
-    card: {
-      margin: 5,
-    },
-    logo: {
-      width: 50,
-      height: 50,
-      marginRight: 30,
-    },
     address: {
-      marginTop: 10,
-    },
-    button: {
-      marginTop: 30,
-      width: "70%",
-      backgroundColor: theme.colors.accent,
-    },
-    labelButton: {
-      color: theme.dark ? theme.colors.text : theme.colors.background,
-    },
-    surface: {
-      backgroundColor: theme.dark ? theme.colors.text : theme.colors.background,
-      elevation: 4,
-      padding: 8,
-    },
-    activityIndicator: {
-      margin: 10,
-    },
-    content: {
       marginTop: 10,
     },
   });

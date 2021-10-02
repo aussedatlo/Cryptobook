@@ -1,11 +1,11 @@
-import { getBtcBalance } from "../services/BlockCypher.service";
+import { IBlockchainAddress } from "../models/blockchain/blockchain-btc-model";
+import { getBtcAddrInfo } from "../services/BlockCypher.service";
 
-export const getBalance = async (coin: string, addr: string) => {
+export const getAddressInfo = async (coin: string, addr: string) => {
   switch (coin.toUpperCase()) {
     case "BTC":
-      let b: number = await getBtcBalance(addr);
-      b = b / 100000000;
-      return b;
+      const res: IBlockchainAddress = await getBtcAddrInfo(addr);
+      return res;
     default:
       return undefined;
   }

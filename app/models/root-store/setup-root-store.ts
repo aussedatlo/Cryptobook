@@ -26,6 +26,7 @@ export const setupRootStore = async () => {
       settings: { dark: false },
       wallets: {},
       market: {},
+      blockchainInfo: {},
     });
 
     __DEV__ && console.error(e.message, null);
